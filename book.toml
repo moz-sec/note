@@ -1,0 +1,6 @@
+[book]
+authors = ["Kobayashi123"]
+language = "ja"
+multilingual = false
+src = "src"
+title = "moz_book"
