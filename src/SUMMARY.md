@@ -2,7 +2,7 @@
 
 - [このノートについて](./about_this_note.md)
 - [自作PC](./maked_pc.md)
-- [サーバー・ネットワーク構築](./server_network.md)
+- [サーバー構築](./server.md)
 - [コンテナ技術](./container.md)
 - [sshの仕組み](./ssh.md)
 - [シェル自作](./create_shell.md)

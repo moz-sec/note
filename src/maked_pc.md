@@ -54,3 +54,9 @@ BOOTの優先順位が指定できるため、ブータブルUSBを1番目にし
 すると、Ubuntuのインストールが始まる。
 
 ![インストールまで終了](image/maked_pc/install_ubuntu.jpg)
+
+## Ubuntu の セットアップ
+
+KVMを使えるようにする。
+
+[https://ubuntu.com/download/kvm](https://ubuntu.com/download/kvm)
