@@ -1,16 +1,13 @@
 # サーバー構築
 
 KVM を使ってサーバーを構築する方法を書く。
-
-まずは、使いたい OS の isoファイル をダウンロードしておく。
-
+まずは、OS の isoファイル をダウンロードする。
 私は、GUI でも操作できるように、Ubuntu Desktop 22.04.2 LTS を使用する。
+Ubuntu の isoファイルは、[公式サイト(jp.ubuntu.com)](https://jp.ubuntu.com/download)からダウンロードできる。
 
-isoファイルは、[公式サイト(jp.ubuntu.com)](https://jp.ubuntu.com/download)からダウンロードできる。
+## パッケージの更新
 
-## ssh 設定
-
-OSのインストールが終わり、起動したら、以下のコマンドを実行して、パッケージを更新する。
+OSのインストールが終わり、起動したら、パッケージを更新する。
 
 ```bash
 sudo apt update # パッケージ一覧を更新
@@ -18,7 +15,41 @@ sudo apt upgrade # パッケージを更新
 sudo apt autoremove # 不要なパッケージを削除
 ```
 
-その後、以下のコマンドを実行して、ssh でアクセスできるようにする。
+## ipアドレスの設定
+
+Ubuntu Desktopならば、NetworkManager で設定するのがいいため、GUIでの設定か `nmcli` コマンドで設定する。
+Ubuntu Serverならば、netplan で設定するのがいい。
+
+### NetworkManager
+
+### netplan
+
+`netplan`では、 */etc/netplan* 配下のyamlファイルに従い、アドレスの設定を行う。
+ファイルは辞書順に読み込まれるため、今回は、 */etc/netplan/99-config.yaml* という名前で作成する。
+
+```bash
+sudo cp /etc/netplan/00-installer-config.yaml /etc/netplan/99-config.yaml
+cat /etc/netplan/99-config.yaml # 固定IPアドレスを設定する
+    network:
+      ethernets:
+        enp1s0:
+          dhcp4: false
+          dhcp6: false
+          addresses:
+            - 192.168.10.12/24
+          routes:
+            - to: default
+              via: 192.168.10.1
+          nameservers:
+            addresses:
+              - 192.168.10.1
+      version: 2
+sudo netplan apply
+```
+
+## ssh 設定
+
+ssh でアクセスできるようにして、遠隔で操作できるようにする。
 
 ```bash
 sudo apt install openssh-server # openssh-serverのインストール
