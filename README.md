@@ -16,8 +16,8 @@ cargo 1.67.0 (8ecd4f20a 2023-01-10)
 
 1. Clone this repository
 
-```
-$ git clone https://github.com/Kobayashi123/Note.git
+```bash
+git clone https://github.com/Kobayashi123/Note.git
 ```
 
 2. Installing the Rust
@@ -27,20 +27,20 @@ See official documentation.
 
 3. Installing mdbook by cargo
 
-```
-$ cargo install mdbook
+```bash
+cargo install mdbook
 ```
 
 4. Build
 
-```
-$ mdbook build
+```bash
+mdbook build
 ```
 
 5. Open the browser
 
-```
-$ open book/index.html
+```bash
+open book/index.html
 ```
 
 ## Author
