@@ -1,11 +1,48 @@
 # Git
 
-## 基本コマンド
+## gitコマンド
+
+### リポジトリの作成
 
 ```bash
 git init # ローカルリポジトリの初期化
 git remote add origin {GithubのURL} # リモートリポジトリとの紐付け
 git push -u origin main
+```
+
+### ブランチの作成と切り替え
+
+```bash
+git branch # ブランチの一覧を表示
+git branch {ブランチ名} # ブランチの作成（現在のブランチから派生）
+git branch {新ブランチ名} {派生元ブランチ名} # ブランチの作成（指定したブランチから派生）
+
+git switch {ブランチ名} # ブランチの切り替え
+git switch -c {ブランチ名} # ブランチを作成し、切り替え
+git switch -c {新ブランチ名} {派生元ブランチ名} # 指定したブランチから派生して、ブランチを作成し、切り替え
+```
+
+### ブランチの差分を取る
+
+```bash
+git diff {ブランチ名A} {ブランチ名B} # ローカルブランチの比較
+git diff origin/{ブランチ名A} {ブランチ名B} # リモートブランチとの比較
+git diff origin/{ブランチ名A} {ブランチ名B} --shortstat # 更新行数を表示
+```
+
+### リモートURLの変更
+
+```bash
+git remote -v # 現在のリモートURLを確認
+git remote set-url origin {新 URL} # リモートURLの変更
+```
+
+### patchの作成と適用
+
+```bash
+git diff > {patchファイル名} # patchの作成
+git diff HEAD^~1 > {patchファイル名} # コミットの範囲を指定して差分をとり、patchを作成
+patch -p1 < {patchファイル名} # patchの適用
 ```
 
 ## コミットメッセージ
@@ -30,50 +67,45 @@ git push -u origin main
 - **test**: テストコードの追加や修正
 - **config**: 構成変更
 
-### 参考
-
-## Github リポジトリ
-
-リポジトリの設定は、基本的に以下のようにする。
+## Githubの設定
 
 ### Features
 
-1. **Discussion 有効**
+- Discussion **有効**
 
-    GitHub上で課題などについて、メンバと議論するための機能
+GitHub上で課題などについて、メンバと議論するための機能
 
-   - GitHub Discussions： 仕様や処理方式などの議論、方針決め
-   - GitHub Issues: 方針決定後の作業の管理・分類
+GitHub Discussionsでは、仕様や処理方式などの議論、方針決めを行い、GitHub Issuesでは、方針決定後の作業の管理・分類を行うために使う。
 
 ### Pull Request
 
-2. **Allow rebase merging 無効**
+- Allow rebase merging **無効**
 
-    merge commitではなくrebaseされる
+merge commitではなくrebaseされる
 
-3. **Always suggest updating pull request branches 有効**
+- Always suggest updating pull request branches **有効**
 
-    Pull Request作成後に、ベースブランチが更新された場合、ソースブランチの更新を提案してくれる
+Pull Request作成後に、ベースブランチが更新された場合、ソースブランチの更新を提案してくれる
 
-4. **Automatically delete head branches 有効**
+- Automatically delete head branches **有効**
 
-    Pull Requestをマージすると、ソースブランチを自動的に削除
+Pull Requestをマージすると、ソースブランチを自動的に削除
 
 ### Pushes
 
-5. **Limit how many branches and tags can be updated in a single push 有効**
+- Limit how many branches and tags can be updated in a single push **有効**
 
-    複数のブランチが一度のpushでまとめて更新される場合、ブロックする機能
+複数のブランチが一度のpushでまとめて更新される場合、ブロックする機能
 
 ### Code Review Limits
 
-6. **Limit to users explicitly granted read or higher access 有効**
+- Limit to users explicitly granted read or higher access **有効**
 
-    Pull Requestの「承認」「変更要求」を明示的に許可したユーザだけが行えるようにする
+Pull Requestの「承認」「変更要求」を明示的に許可したユーザだけが行えるようにする
 
 ## Github Actions
 
-.github/workflows/{YAMLファイル} に、GitHub Actions で実行するワークフローを定義する。
+*.github/workflows/{YAMLファイル}* に、GitHub Actions で実行するワークフローを定義する。
 
 ```yaml
 name: CI
