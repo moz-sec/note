@@ -118,8 +118,8 @@ OSの機能を利用して、コンテナを実行する責務を担当する。
 
 1. 各種 Namespace を作成する。
 2. ルートディレクトリを変更する。
-3. cgroups でリソース制限を行う。
-4. AppArmor
+3. Cgroups でリソース制限を行う。
+4. AppArmor で強制アクセス制限を行う。
 
 #### Namespaceの分離
 
@@ -387,4 +387,136 @@ $ sudo apparmor_parser -r /etc/apparmor.d/home.moz.container.my-container.sh
 $ sudo ./my-container.sh
 > cat /proc/kcore
     cat: can not open '/proc/kcore': Permission denied
+```
+
+## コンテナへの攻撃ルート
+
+### アタックサーフェス
+
+攻撃例を挙げる。
+
+- コンテナランタイムへの攻撃
+- コンテナの設定不備を利用した攻撃
+
+### Docker API への攻撃
+
+Dockerでは、デフォルトで、UNIXドメインソケット`/var/run/docker.sock`を用いて、コンテナランタイムと通信する。
+しかし、設定を変更することで、TCPを使い、外部からコンテナの操作もできる。
+外部から操作する場合には、何らかの認証をしなければ、悪用される。
+TCPによる REST API を使用するケースは少ないため、攻撃の対象となることは少ない。
+
+#### 攻撃ステップ
+
+1. ポートスキャンをして、Docker APIへの疎通を確認
+2. Docker APIを用いて、悪意あるコンテナを起動
+
+#### 攻撃例
+
+ホストのルートディレクトリをコンテナのボリュームとしてマウントし、ホストのファイル（`/etc/passwd`とか）を読み取る。
+
+### コンテナランタイムの脆弱性を利用した攻撃
+
+runC や Docker などのコンテナランタイム自体にも脆弱性が発見されており、攻撃者はコンテナへ侵入した後、脆弱性を悪用することでホスト側へエスケープするなどのシナリオが考えられる。
+
+#### 過去に見つかった脆弱性
+
+- [CVE-2019-5736](https://nvd.nist.gov/vuln/detail/CVE-2019-5736): runC の脆弱性
+- [CVE-2019-19921](https://nvd.nist.gov/vuln/detail/CVE-2019-19921): runC の脆弱性
+- [CVE-2021-30465](https://nvd.nist.gov/vuln/detail/CVE-2021-30465): runC の脆弱性
+- [CVE-2019-14271](https://nvd.nist.gov/vuln/detail/CVE-2019-14271): Docker の脆弱性
+
+### ケーパビリティの設定不備によるエスケープ
+
+コンテナで動かすアプリケーションによっては、ケーパビリティを追加することもあるが、ケーパビリティの種類によっては、エスケープにつながってしまう。
+ケーパビリティを付与しても Seccomp などで防ぐことは可能ですが、Docker の `--cap-add` オプションでケーパビリティを付与した場合は、Seccomp プロファイルも変更され、そのケーパビリティに関連するシステムコールの呼び出しも許可されてしまうため注意が必要である。
+
+#### CAP_SYSLOG
+
+`syslog(2)` 操作を可能にするケーパビリティ。
+dmesgを実行できるため、機密性のあるログを読み取ったり、カーネルログをクリアできたりする。
+
+```bash
+docker run --rm -it ubuntu:latest bash
+/ dmeseg
+    dmesg: read kernel buffer failed: Operation not permitted
+
+docker run --cap-add SYSLOG --rm -it ubuntu:latest bash # SYSLOG ケーパビリティを付与
+/ dmesg
+    [    0.000000] Linux version 5.15.0-86-generic (buildd@lcy02-amd64-086)
+```
+
+#### CAP_NET_RAW
+
+CAP_NET_RAW ケーパビリティを付与すると、コンテナのネットワーク上で ARP スプーフィングなどのネットワークを盗聴する攻撃が可能となる。そのため、CAP_NET_RAW ケーパビリティが付与されたコンテナが侵害された場合、他のコンテナの通信を傍受することが可能となる。
+
+```bash
+cat docker-compose.yml
+version: '3.8'
+  services:
+    app:
+      image: hashicorp/http-echo
+      command: ["-text", "hello"]
+      ports:
+      - 5678:5678
+    victim:
+      image: curlimages/curl:latest
+      command: ["sh", "-c", "while true; do curl -s -w '%{http_code}¥n' -o /dev/null]
+      http://app:5678; sleep 1; done"]
+    attacker:
+      image: ubuntu:latest
+      command: ["tail", "-f", "/dev/null"]
+
+docker compose up -d
+```
+
+## Dockerネットワーク
+
+Dockerコンテナを作成する。
+
+```bash
+docker run -d --rm -it --name ubuntu1 ubuntu:22.04
+docker run -d --rm -it --name ubuntu2 ubuntu:22.04
+```
+
+```bash
+apt update
+apt upgrade
+apt install iproute2
+apt install iputils-ping
+apt install tcpdump
+apt install net-tooles
+```
+
+新たにブリッジを作成し、docker0 から変更する。
+
+```bash
+sudo ip link add name br0 type bridge # br0というブリッジを作成する
+sudo ip link set veth3502cac master br0 # br0にvethを接続する
+sudo ip link set veth85eb18d master br0 # br0にvethを接続する
+sudo ip link show # br0とvethが接続されていることを確認する
+```
+
+疎通確認を行う。
+
+```bash
+docker exec ubuntu1 ping 172.0.0.3 # ubuntu1からubuntu2にpingを送信
+```
+
+br0 でパケットがドロップされる。
+
+```bash
+sudo tcpdump -i veth3502cac # ubuntu1側のvethでパケットをキャプチャする
+sudo tcpdump -i veth85eb18d # ubuntu2側のvethでパケットをキャプチャする
+sudo tcpdump -i br0 # br0でパケットをキャプチャする
+```
+
+これは、Linuxの仮想ブリッジに対して、br_netfilter が有効になっているからである。
+
+2通りの方法で、この問題を解決することができる。
+
+1. br_netfilter を無効にする
+2. iptables の設定を変更する
+
+```bash
+sudo sysctl -w net.bridge.bridge-nf-call-iptables=0 # br_netfilter 
 ```

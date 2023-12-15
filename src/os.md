@@ -64,3 +64,20 @@ IPアドレスとポート番号を指定して、データのやり取りを行
 6. *close()*: `socket.close()`
 
     ソケットを閉じる。
+
+## カーネルビルド
+
+ソースコードの取得
+`git clone --depth=1 https://github.com/torvalds/linux.git`
+
+カーネルコンフィグの準備
+`make oldconfig`
+
+カーネルモジュールのインストール
+`sudo make modules_install`
+
+カーネルのビルド
+`make -j8`
+
+カーネルのインストール
+`sudo make install`
