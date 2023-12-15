@@ -1,10 +1,14 @@
 # Summary
 
 - [このノートについて](./about_this_note.md)
-- [自作PC](./maked_pc.md)
 - [サーバー構築](./server.md)
 - [コンテナ技術](./container.md)
-- [sshの仕組み](./ssh.md)
+- [Kubernetes](./kubernetes.md)
+- [監視](./observation.md)
+- [高速通信](./high_speed_communication.md)
+- [ネットワーク](./network.md)
+- [DNS](./dns.md)
+- [自作PC](./maked_pc.md)
 - [シェル自作](./create_shell.md)
 - [ルーター自作](./create_router.md)
 - [Webブラウザ自作](./create_web_browser.md)
@@ -14,3 +18,4 @@
 - [HTB CheatSheet](./htb_cheatsheet.md)
 - [Segment Routing](./segment_routing.md)
 - [VPN](./vpn.md)
+- [参考になるサイトや書籍](./reference.md)
