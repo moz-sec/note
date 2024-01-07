@@ -4,6 +4,10 @@ CI/CD とは、**Continuous Integration** と **Continuous Delivery** の略で�
 
 これを行うことで、手作業によるミスを防ぐことができる。
 
-**CI(Continuous Integration)** では、アプリケーションの実装が終わるたびに、自動でテストやイメージビルドを行う。
+## CI
 
-**CD(Continuous Delivery)** では、CI でビルドしたイメージを、自動で実行環境にデプロイする。
+**CI** では，プログラムが変更されるたびに，自動でテストやイメージビルドを行う．
+
+## CD
+
+**CD(Continuous Delivery)** では，CI でビルドしたイメージを，自動で実行環境にデプロイする．
