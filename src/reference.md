@@ -4,6 +4,8 @@
 
 ## 書籍
 
+- [MODERN OPERATING SYSTEMS](https://csc-knu.github.io/sys-prog/books/Andrew%20S.%20Tanenbaum%20-%20Modern%20Operating%20Systems.pdf)
+
 ## Podcast
 
 - [セキュリティのあれ](https://www.tsujileaks.com/)
