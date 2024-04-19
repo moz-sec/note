@@ -1,6 +1,6 @@
 [book]
-authors = ["Kobayashi123"]
+authors = ["moz-sec"]
 language = "ja"
 multilingual = false
 src = "src"
-title = "Moz Trajectory"
+title = "moz trajectory"
