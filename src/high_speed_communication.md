@@ -14,7 +14,29 @@
 
 100pまで
 
+## ネットワークスタックのスケール
+
+複数のCPUにパケットとTCP/IPスタックを処理させることで、スループットを向上させることができる。
+
+1. RSS (Receive Side Scaling)
+2. RPS (Receive Packet Steering)
+3. RFS (Receive Flow Steering)
+4. Accelerated Receive Flow Steering
+5. XPS (Transmit Packet Steering)
+
+## チューニング
+
+ソケットバッファサイズの上限を設定する。
+単位はバイトである。
+
+```bash
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+```
+
 ## 参考
 
 - [MegaPipe: A New Programming Interface for Scalable Network I/O](https://www.usenix.org/conference/osdi12/technical-sessions/presentation/han)
 - [NICの高速化とシステムソフトウェア研究](https://seminar-materials.iijlab.net/iijlab-seminar/iijlab-seminar-20231017.pdf)
+
+- [Documentation/networking/scaling.txt](https://www.kernel.org/doc/Documentation/networking/scaling.txt)

@@ -88,10 +88,15 @@ kubeadm join <control-plane-host>:<control-plane-port> --token <token> --discove
 
 ネットワークプラグインの設定を行う．
 [6] に従って，設定を行う．
+これは、マスターノードでのみ実行する。
+cilium のkubeProxyReplacement を有効にしている。
 
 ```bash
 helm repo add cilium https://helm.cilium.io/
-helm install cilium cilium/cilium --version 1.14.5 --namespace kube-system
+
+API_SERVER_IP=192.168.10.50
+API_SERVER_PORT=6443
+helm install cilium cilium/cilium --version 1.15.4 --namespace kube-system --set kubeProxyReplacement=true --set k8sServiceHost=${API_SERVER_IP} --set k8sServicePort=${API_SERVER_PORT}
 ```
 
 ### 確認
