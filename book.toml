@@ -4,3 +4,13 @@ language = "ja"
 multilingual = false
 src = "src"
 title = "moz trajectory"
+
+[preprocessor]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output]
+
+[output.html]
+additional-js = ["plugin/mermaid.min.js", "plugin/mermaid-init.js"]

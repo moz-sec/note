@@ -69,3 +69,11 @@ Github の Settings/Pages の Source で Github Actions を選択する。
 Github Action の workflow は、[.github/workflows/mdbook.yml](https://github.com/moz-sec/note/blob/main/.github/workflows/mdbook.yml) に記述してある。
 
 <img alt="github_action_setting" src="image/about_this_pages/github_action_setting.png" border="1">
+
+```mermaid
+graph TD;
+    A[mdbook build] --> B[HTML];
+    B --> C[Deploy];
+    C --> D[https://moz-sec.github.io/note/];
+    C --> E[https://moz-sec.com/note/];
+```
