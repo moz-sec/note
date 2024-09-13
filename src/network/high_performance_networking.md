@@ -1,4 +1,4 @@
-# 高速通信技術
+# High-Performance Networking
 
 ## OS と NIC の特性
 

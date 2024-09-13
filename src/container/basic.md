@@ -1,4 +1,4 @@
-# コンテナ技術
+# Container
 
 ## コンテナ技術とは
 
@@ -19,7 +19,7 @@
 |  集積密度  |      低い       | **高い**                      |
 | 分離レベル |      **高い**   | 場合による（コンテナの実装に依存） |
 
-![VM型仮想化とコンテナ型仮想化の比較](https://moz-security.me/Note/image/container/compare_vm_container.png)
+![VM型仮想化とコンテナ型仮想化の比較](https://moz-sec.com/src/container/image/compare_vm_container.png)
 
 ### コンテナランタイム
 
