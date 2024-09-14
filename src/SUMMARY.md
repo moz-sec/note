@@ -8,9 +8,14 @@
   - [Container](./container/basic.md)
   - [Container Runtime](./container/runtime.md)
   - [Container Security](./container/security.md)
+  - [Podman](./container/podman.md)
 
 - [Kubernetes](./kubernetes/index.md)
-  - [kubeadm setup](./kubernetes/kubeadm_setup.md)
+  - [setup](./kubernetes/setup.md)
+    - [kubeadm](./kubernetes/setup/kubeadm.md)
+    - [miniKube](./kubernetes/setup/minikube.md)
+    - [kind](./kubernetes/setup/kind.md)
+    - [kubevirt](./kubernetes/setup/kubevirt.md)
   - [Auto Scaling](./kubernetes/auto_scaling.md)
   - [Security](./kubernetes/security.md)
 
