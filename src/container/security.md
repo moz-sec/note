@@ -36,3 +36,27 @@ $ cat /etc/falco/falco_rules.local.yaml
   output: Spawn suspicious process in a container (container_id=%container.id container_name=%container.name process=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
   priority: WARNING
 ```
+
+### 意図しないコンテナイメージの実行を検知する
+
+コンテナレジストリやイメージ名を指定して、意図しないコンテナイメージの実行を検知することができる。
+
+$ cat /etc/falco/falco_rules.local.yaml
+
+```yaml
+- macro: using_trusted_image
+  condition: (container.image.repository startswith "docker.io/library" or
+    container.image.repository startswith "docker.io/nginx")
+
+- rule: Using untrusted container image
+  desc: Detect using untrusted container image
+  condition: evt.type = container and not using_trusted_image
+  output: "Container started using untrusted container image. (user=\%user.name image=\%container.image.repository:\%container.image.tag)"
+  priority: INFO
+```
+
+## docker-bench-security
+
+[docker-bench-security](https://github.com/docker/docker-bench-security)をクローンし、docker-bench-security.shを実行することで、Dockerのセキュリティ設定をチェックすることができる。結果は、*docker-bench-security/log/* に置かれる。
+
+特定の監査項目をスキップする場合は、`-e`オプションを使用する。
