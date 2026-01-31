@@ -1,0 +1,48 @@
+---
+title: moz-sec Note へようこそ
+description: セキュリティ、インフラ、システムプログラミングに関する技術ノート
+template: splash
+hero:
+  tagline: セキュリティとインフラに関する技術メモ・実践記録
+  image:
+    file: ../../assets/houston.webp
+  actions:
+    - text: ノートを見る
+      link: /about_this_note/
+      icon: right-arrow
+    - text: GitHub リポジトリ
+      link: https://github.com/moz-sec/note
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+## このノートについて
+
+このノートは、サイバーセキュリティとインフラ技術に関する学習メモや実践記録をまとめたものです。
+
+<CardGrid stagger>
+  <Card title="コンテナ技術" icon="seti:docker">
+    Docker、Podman、コンテナランタイムの実装、セキュリティ、namespace、cgroupなどの基礎技術について
+  </Card>
+  <Card title="Kubernetes" icon="seti:kubernetes">
+    Kubernetesのセットアップ、マルチテナント、セキュリティに関する実践的な内容
+  </Card>
+  <Card title="ネットワーク" icon="star">
+    ルーター自作、高性能ネットワーキング、セグメントルーティングなどのネットワーク技術
+  </Card>
+  <Card title="パフォーマンス分析" icon="rocket">
+    プロファイリング、トレーシング、パフォーマンス分析の手法と実践
+  </Card>
+  <Card title="システムプログラミング" icon="laptop">
+    eBPF、シェル自作、Webブラウザ自作などの低レイヤー技術
+  </Card>
+  <Card title="インフラ・運用" icon="setting">
+    サーバー構築、VPN、CI/CD、DNS、DoS攻撃対策などの実務的な技術
+  </Card>
+</CardGrid>
+
+## 技術スタック
+
+このノートは、Markdown で記述し、GitHub で管理しています。GitHub Actions を使って自動的にビルド・デプロイし、GitHub Pages で公開しています。
