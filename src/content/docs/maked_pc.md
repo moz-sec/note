@@ -21,7 +21,7 @@ title: 自作PC
 - バッテリー: [玄人志向 電源 KRPW-BKシリーズ 80PLUS Bronze 650W プラグイン](https://www.amazon.co.jp/gp/product/B078HDTV8P/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1)
 - PCケース: [Thermaltake Versa H26 Black /w casefan ミドルタワー型PCケース](https://www.amazon.co.jp/gp/product/B076H2CHN3/ref=ppx_yo_dt_b_asin_title_o00_s01?ie=UTF8&psc=1)
 
-![各パーツの画像](/maked_pc/each_part.jpg)
+![各パーツの画像](/note/maked_pc/each_part.jpg)
 
 ## 組み立て
 
@@ -45,7 +45,7 @@ title: 自作PC
 
 BIOS画面では、各部品がきちんと認識されているか確認する。
 
-![BIOS画面](/maked_pc/display_bios.jpg)
+![BIOS画面](/note/maked_pc/display_bios.jpg)
 
 ブータブルUSBを別のPCなどで作成する。OSは好きなものを使えばいいが、今回は、Ubuntu Desktopを使用した。
 
@@ -55,7 +55,7 @@ BOOTの優先順位が指定できるため、ブータブルUSBを1番目にし
 
 すると、Ubuntuのインストールが始まる。
 
-![インストールまで終了](/maked_pc/install_ubuntu.jpg)
+![インストールまで終了](/note/maked_pc/install_ubuntu.jpg)
 
 ## Ubuntu の セットアップ
 

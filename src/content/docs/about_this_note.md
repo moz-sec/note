@@ -55,14 +55,14 @@ Github に リポジトリを作成する。
 同時に、Enforce HTTPS にチェックを入れることで、HTTPS に変更する。
 これで、[https://moz-sec.github.io/note/](https://moz-sec.github.io/note/) でアクセスできるようになる。
 
-![github_pages_setting](/about_this_pages/github_pages_setting.png)
+![github_pages_setting](/note/about_this_pages/github_pages_setting.png)
 
 ## 5. ドメインを取得し、設定する
 
 ドメインを取得し、Github の Settings/Pages の Custom domain で取得したドメインを設定する。
 これで、[https://moz-sec.github.io/note/](https://moz-sec.github.io/note/) だけでなく [https://moz-sec.com/note/](https://moz-sec.com/note/) でもアクセスできるようになる。
 
-![custom_domain_setting](/about_this_pages/custom_domain_setting.png)
+![custom_domain_setting](/note/about_this_pages/custom_domain_setting.png)
 
 ## 6. Github Action を設定する
 
@@ -70,7 +70,7 @@ Github の Settings/Pages の Source で Github Actions を選択する。
 この設定により、Github の main ブランチが変更されるたびに、Github Action によって、`mdbook build` が行われ、Github Pages にデプロイされる。
 Github Action の workflow は、[.github/workflows/mdbook.yml](https://github.com/moz-sec/note/blob/main/.github/workflows/mdbook.yml) に記述してある。
 
-![github_action_setting](/about_this_pages/github_action_setting.png)
+![github_action_setting](/note/about_this_pages/github_action_setting.png)
 
 ```mermaid
 graph TD;
