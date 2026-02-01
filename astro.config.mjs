@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import rehypeMermaid from "rehype-mermaid";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,7 +11,6 @@ export default defineConfig({
       type: "shiki",
       excludeLangs: ["mermaid", "math"],
     },
-    rehypePlugins: [rehypeMermaid],
   },
   integrations: [
     starlight({
@@ -33,7 +31,6 @@ export default defineConfig({
         {
           label: "Top",
           items: [
-            { label: "Index", slug: "index" },
             { label: "このノートについて", slug: "about_this_note" },
             { label: "サーバー設定", slug: "server" },
             { label: "自作PC", slug: "maked_pc" },
